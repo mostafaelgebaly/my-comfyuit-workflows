@@ -1,0 +1,2 @@
+cd C:\Users\Gebaly\Desktop\aria2-1.37.0-win-64bit-build1
+aria2c.exe -x8 -j8 -d"C:\Users\Gebaly\Desktop" "https://huggingface.co/unsloth/gemma-3n-E4B-it-GGUF/resolve/main/gemma-3n-E4B-it-UD-Q8_K_XL.gguf?download=true"
