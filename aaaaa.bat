@@ -1,25 +1,20 @@
 @echo off
 setlocal
 
-REM --- Configuration ---
-set "repo_path=C:\Users\Gebaly\Documents\ComfyUI_windows_portable\ComfyUI\user\default\workflows"  REM Your repo path
-set "remote_origin=origin"  REM Name of your remote (usually 'origin')
-set "remote_branch=master" REM Branch to compare against
+:: --- Configuration ---
+set "repo_path=C:\Users\Gebaly\Documents\ComfyUI_windows_portable\ComfyUI\user\default\workflows"
+set "remote_origin=origin"
+set "remote_branch=master"  :: Or your desired branch (e.g., main)
 
-
-echo Checking local and remote repository versions...
-
-REM Get local version
+:: --- Get Local and Remote Versions ---
 for /f "tokens=*" %%a in ('git rev-parse HEAD') do set "local_version=%%a"
+for /f "tokens=*" %%a in ('git rev-parse --abbrev-ref HEAD') do set "local_branch=%%a"
 
-REM Get remote version
-for /f "tokens=*" %%a in ('git rev-parse !--ref %remote_branch%') do set "remote_version=%%a"
+for /f "tokens=*" %%a in ('git rev-parse --abbrev-ref %remote_branch%') do set "remote_version=%%a"
 
-
+:: --- Compare Versions ---
 echo Local version: %local_version%
 echo Remote version: %remote_version%
-
-
 
 if "%local_version%" GTR "%remote_version%" (
   echo Local repository is more updated. Pushing changes...
@@ -31,11 +26,9 @@ if "%local_version%" GTR "%remote_version%" (
   echo Remote repository is more updated. Pulling changes...
   cd "%repo_path%"
   git pull --allow-unrelated-histories %remote_origin% %remote_branch%
-
 ) else (
    echo Local and remote repositories are synchronized. No action needed.
 )
-
 
 endlocal
 pause
